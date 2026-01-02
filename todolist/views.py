@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from todolist.models import Task
 
 # Create your views here.
 def home(request):
@@ -9,8 +10,10 @@ def home(request):
     return render(request, "home.html", context) 
 
 def todolist(request):
+    all_tasks = Task.objects.all()
     context = {
-        'page': 'Todo List'
+        'page': 'Todo List',
+        'all_tasks': all_tasks
     }
     return render(request, "todolist.html", context) 
 
