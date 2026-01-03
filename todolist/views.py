@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from todolist.models import Task
 from todolist.forms import TaskForm
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -15,7 +16,9 @@ def todolist(request):
         form_data = TaskForm(request.POST or None)
         if form_data.is_valid():
             form_data.save()
+            messages.success(request, "Todo added successfully.")
             return redirect("todolist")
+        messages.error(request, "Something went wrong.")
         
     all_tasks = Task.objects.all()
     context = {
